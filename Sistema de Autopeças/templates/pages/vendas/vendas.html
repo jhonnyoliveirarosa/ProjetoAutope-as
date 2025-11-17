@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% set css = 'forms.css' %}
+{% block title %}Vendas{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>💰 Cadastro de Vendas</h1>
+  <p class="muted">Gerencie suas vendas e acompanhe o faturamento</p>
+</section>
+
+<div class="grid-container">
+  <div class="card">
+    <h2>🧾 Nova Venda</h2>
+    <form method="POST" class="form-grid">
+      <div class="form-group">
+        <label>Nº da Venda</label>
+        <input type="text" name="numero" required>
+      </div>
+
+      <div class="form-group">
+        <label>Cliente</label>
+        <input type="text" name="cliente" required>
+      </div>
+
+      <div class="form-group">
+        <label>Data</label>
+        <input type="date" name="data" required>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">💾 Salvar</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>📋 Vendas Registradas</h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Número</th>
+          <th>Cliente</th>
+          <th>Data</th>
+          <th>Valor Total</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for v in vendas %}
+        <tr>
+          <td>{{ v.id }}</td>
+          <td>{{ v.numero }}</td>
+          <td>{{ v.cliente }}</td>
+          <td>{{ v.data.strftime('%d/%m/%Y') }}</td>
+          <td>R$ {{ "%.2f"|format(v.valor_total) }}</td>
+          <td>
+            <a href="{{ url_for('itens_venda', venda_id=v.id) }}" class="btn-action edit">🧾 Itens</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

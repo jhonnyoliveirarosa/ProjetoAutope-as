@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% set css = 'forms.css' %}
+{% set script = 'filtro_estoque.js' %}
+{% block title %}Controle de Estoque{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>📦 Controle de Estoque</h1>
+  <p class="muted">Visualize o saldo atual de todos os produtos cadastrados</p>
+</section>
+
+<div class="grid-container">
+  <!-- === Filtro de busca === -->
+  <div class="card">
+    <h2>🔍 Buscar Produto</h2>
+    <div class="form-group">
+      <input type="text" id="filtro" placeholder="Digite código, descrição, marca ou aplicação...">
+    </div>
+  </div>
+
+  <!-- === Tabela de Estoque === -->
+  <div class="card">
+    <h2>📋 Produtos em Estoque</h2>
+    <table id="tabela-estoque" class="data-table">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Descrição</th>
+          <th>Marca</th>
+          <th>Aplicação</th>
+          <th>Saldo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in produtos %}
+        <tr>
+          <td>{{ p.codigo }}</td>
+          <td>{{ p.descricao }}</td>
+          <td>{{ p.marca }}</td>
+          <td>{{ p.aplicacao }}</td>
+          <td>{{ p.estoque_atual }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

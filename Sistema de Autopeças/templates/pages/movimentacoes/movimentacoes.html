@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% set css = 'forms.css' %}
+{% set script = 'movimentacoes.js' %}
+{% block title %}Movimentações{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>🔄 Controle de Movimentações</h1>
+  <p class="muted">Registre entradas e saídas no estoque</p>
+</section>
+
+<div class="grid-container">
+  <div class="card">
+    <h2>➕ Nova Movimentação</h2>
+    <form method="POST" class="form-grid">
+      <div class="form-group">
+        <label>Produto</label>
+        <select name="produto_id" id="select-produto" required>
+          <option value="">Digite para buscar...</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Tipo</label>
+        <select name="tipo" required>
+          <option value="entrada">Entrada</option>
+          <option value="saida">Saída</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Quantidade</label>
+        <input type="number" name="quantidade" min="1" required>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">💾 Registrar</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>📋 Histórico de Movimentações</h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Produto</th>
+          <th>Tipo</th>
+          <th>Quantidade</th>
+          <th>Data</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in movimentacoes %}
+        <tr>
+          <td>{{ m.id }}</td>
+          <td>{{ m.produto.descricao }}</td>
+          <td>{{ '⬆️ Entrada' if m.tipo == 'entrada' else '⬇️ Saída' }}</td>
+          <td>{{ m.quantidade }}</td>
+          <td>{{ m.data.strftime('%d/%m/%Y %H:%M') }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

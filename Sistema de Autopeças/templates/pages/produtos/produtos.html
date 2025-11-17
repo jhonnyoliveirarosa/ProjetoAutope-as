@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% set css = 'forms.css' %}
+
+{% block title %}Produtos{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>📦 Cadastro de Produtos</h1>
+  <p class="muted">Gerencie e consulte todos os produtos cadastrados</p>
+</section>
+
+<div class="grid-container">
+  <!-- === Formulário de Cadastro === -->
+  <div class="card">
+    <h2>📝 Novo Produto</h2>
+    <form method="POST" class="form-grid form-produto">
+      <div class="form-group">
+        <label for="codigo">Código</label>
+        <input type="text" name="codigo" id="codigo" required>
+      </div>
+
+      <div class="form-group">
+        <label for="descricao">Descrição</label>
+        <input type="text" name="descricao" id="descricao" required>
+      </div>
+
+      <div class="form-group">
+        <label for="marca">Marca</label>
+        <input type="text" name="marca" id="marca">
+      </div>
+
+      <div class="form-group">
+        <label for="aplicacao">Aplicação</label>
+        <input type="text" name="aplicacao" id="aplicacao">
+      </div>
+
+      <div class="form-group">
+        <label for="preco_compra">Preço de Compra</label>
+        <input type="number" name="preco_compra" id="preco_compra" step="0.01" required>
+      </div>
+
+      <div class="form-group">
+        <label for="preco_venda">Preço de Venda</label>
+        <input type="number" name="preco_venda" id="preco_venda" step="0.01" required>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">💾 Salvar</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- === Tabela de Produtos === -->
+  <div class="card">
+    <h2>📋 Produtos Cadastrados</h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Código</th>
+          <th>Descrição</th>
+          <th>Marca</th>
+          <th>Aplicação</th>
+          <th>Preço Compra</th>
+          <th>Preço Venda</th>
+          <th>Estoque</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in produtos %}
+        <tr>
+          <td>{{ p.id }}</td>
+          <td>{{ p.codigo }}</td>
+          <td>{{ p.descricao }}</td>
+          <td>{{ p.marca }}</td>
+          <td>{{ p.aplicacao }}</td>
+          <td>R$ {{ "%.2f"|format(p.preco_compra) }}</td>
+          <td>R$ {{ "%.2f"|format(p.preco_venda) }}</td>
+          <td>{{ p.estoque_atual }}</td>
+          <td>
+            <a href="{{ url_for('editar', id=p.id) }}" class="btn-action edit">✏️ Editar</a>
+            <a href="{{ url_for('excluir', id=p.id) }}" class="btn-action delete"
+              onclick="return confirm('Excluir este produto?')">🗑️ Excluir</a>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="9" style="text-align:center; color:#94a3b8;">Nenhum produto cadastrado.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

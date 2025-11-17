@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% set css = 'forms.css' %}
+{% block title %}Editar Produto{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>✏️ Editar Produto</h1>
+  <p class="muted">Atualize as informações do produto selecionado</p>
+</section>
+
+<div class="grid-container">
+  <div class="card">
+    <h2>🧾 Dados do Produto</h2>
+
+    <form method="POST" class="form-grid">
+      <div class="form-group">
+        <label for="codigo">Código</label>
+        <input type="text" id="codigo" name="codigo" value="{{ produto.codigo }}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="descricao">Descrição</label>
+        <input type="text" id="descricao" name="descricao" value="{{ produto.descricao }}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="marca">Marca</label>
+        <input type="text" id="marca" name="marca" value="{{ produto.marca }}">
+      </div>
+
+      <div class="form-group">
+        <label for="aplicacao">Aplicação</label>
+        <input type="text" id="aplicacao" name="aplicacao" value="{{ produto.aplicacao }}">
+      </div>
+
+      <div class="form-group">
+        <label for="preco_compra">Preço de Compra (R$)</label>
+        <input type="number" id="preco_compra" name="preco_compra" step="0.01" value="{{ produto.preco_compra }}"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="preco_venda">Preço de Venda (R$)</label>
+        <input type="number" id="preco_venda" name="preco_venda" step="0.01" value="{{ produto.preco_venda }}" required>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">💾 Salvar Alterações</button>
+        <a href="{{ url_for('produtos') }}" class="btn-action" style="color:#38bdf8;">← Voltar</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

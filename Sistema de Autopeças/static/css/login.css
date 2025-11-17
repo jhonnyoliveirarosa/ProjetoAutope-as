@@ -1,0 +1,158 @@
+/* ========================================
+   LOGIN PAGE — Dark theme com glow azul
+   ======================================== */
+:root {
+    --bg1: #0d1117;
+    --bg2: #111827;
+    --primary: #38bdf8;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --radius: 12px;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at top left, var(--bg1), var(--bg2) 70%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Inter", sans-serif;
+    color: var(--text);
+}
+
+/* ==== CONTAINER PRINCIPAL ==== */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* ==== CARD ==== */
+.login-card {
+    background: rgba(30, 41, 59, 0.9);
+    border: 1px solid rgba(56, 189, 248, 0.15);
+    padding: 2.5rem 2.2rem;
+    border-radius: var(--radius);
+    box-shadow: 0 0 25px rgba(56, 189, 248, 0.15);
+    width: 360px;
+    text-align: center;
+    backdrop-filter: blur(6px);
+    transition: all 0.3s ease;
+}
+
+.login-card:hover {
+    box-shadow: 0 0 35px rgba(56, 189, 248, 0.25);
+}
+
+.logo {
+    font-size: 1.6rem;
+    color: var(--primary);
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+}
+
+h2 {
+    color: var(--text);
+    font-size: 1.2rem;
+    margin-bottom: 1.8rem;
+}
+
+/* ==== FORM ==== */
+.form-group {
+    text-align: left;
+    margin-bottom: 1.2rem;
+    position: relative;
+}
+
+label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 6px;
+}
+
+input {
+    width: 100%;
+    padding: 10px 12px 10px 38px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    background-color: #0f172a;
+    color: var(--text);
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    background-position: 12px center;
+    box-sizing: border-box;
+}
+
+/* Ícones nos campos */
+#username {
+    background-image: url("https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/user.svg");
+}
+#password {
+    background-image: url("https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/lock.svg");
+}
+
+input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
+    outline: none;
+}
+
+/* ==== BOTÃO ==== */
+.btn-login {
+    width: 100%;
+    background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+    color: #0f172a;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+}
+
+.btn-login:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+}
+
+/* ==== ALERTA ==== */
+.alert {
+    background: rgba(248, 113, 113, 0.1);
+    color: #f87171;
+    border: 1px solid rgba(248, 113, 113, 0.3);
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+/* ==== FOOTER ==== */
+.footer-text {
+    color: var(--muted);
+    font-size: 0.8rem;
+    margin-top: 1.6rem;
+}
+
+/* ==== RESPONSIVIDADE ==== */
+@media (max-width: 420px) {
+    .login-card {
+        width: 90%;
+        padding: 2rem;
+    }
+
+    input {
+        font-size: 0.9rem;
+    }
+
+    .btn-login {
+        font-size: 0.95rem;
+    }
+}

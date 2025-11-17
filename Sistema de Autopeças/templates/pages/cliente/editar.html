@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% set css = "cliente.css" %}
+
+{% block content %}
+
+<div class="page-container">
+
+    <h1 class="page-title">✏️ Editar Cliente</h1>
+
+    <section class="card">
+        <h2 class="card-title">Alterar informações</h2>
+
+        <form method="POST" class="form-grid">
+
+            <div class="form-group">
+                <label>Nome do Cliente</label>
+                <input type="text" name="nome" value="{{ cliente.nome }}" required>
+            </div>
+
+            <div class="form-group">
+                <label>CNPJ</label>
+                <input type="text" name="cnpj" value="{{ cliente.cnpj }}">
+            </div>
+
+            <div class="form-group full">
+                <label>Endereço</label>
+                <input type="text" name="endereco" value="{{ cliente.endereco }}">
+            </div>
+
+            <button type="submit" class="btn-primary full">Salvar Alterações</button>
+        </form>
+
+        <a href="{{ url_for('clientes') }}" class="btn-secondary voltar-btn">
+            ◀ Voltar
+        </a>
+
+    </section>
+
+</div>
+
+{% endblock %}

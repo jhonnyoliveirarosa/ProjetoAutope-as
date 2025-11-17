@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% set css = 'forms.css' %}
+
+{% block title %}Itens do Pedido{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <h1>📦 Itens do Pedido #{{ pedido.id }}</h1>
+  <p class="muted">{{ pedido.origem }} → {{ pedido.destino }}</p>
+</header>
+
+<div class="grid-container">
+  <!-- ==== Formulário ==== -->
+  <div class="card">
+    <h2>➕ Adicionar Item ao Pedido</h2>
+
+    <form method="POST" class="form-grid">
+      <div class="form-group">
+        <label>Produto</label>
+        <select name="produto_id" required>
+          <option value="">Selecione um produto...</option>
+          {% for p in produtos %}
+          <option value="{{ p.id }}">
+            {{ p.descricao }} (Estoque: {{ p.estoque_atual }})
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Quantidade</label>
+        <input type="number" name="quantidade" min="1" required>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">Adicionar Item</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ==== Itens já cadastrados ==== -->
+  <div class="card">
+    <h2>📋 Itens do Pedido</h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Produto</th>
+          <th>Quantidade</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in itens %}
+        <tr>
+          <td>{{ item.produto.descricao }}</td>
+          <td>{{ item.quantidade }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="2" style="text-align:center; color:#94a3b8;">Nenhum item adicionado ainda.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="form-actions" style="text-align:left;">
+      <a href="{{ url_for('pedidos') }}" class="btn-action" style="color:#38bdf8;">← Voltar</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

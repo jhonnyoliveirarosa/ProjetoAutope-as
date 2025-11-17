@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% set css = 'forms.css' %}
+{% set script = 'filtro_clientes.js' %}
+{% block title %}Clientes{% endblock %}
+
+{% block content %}
+
+<section class="page-header">
+    <h1>👥 Clientes</h1>
+    <p class="muted">Gerencie seus clientes, cadastre novos e edite existentes</p>
+</section>
+
+<div class="grid-container">
+
+    <!-- ==================== CADASTRAR CLIENTE ==================== -->
+    <div class="card">
+        <h2>➕ Cadastrar Novo Cliente</h2>
+
+        <form method="POST" class="form-grid">
+
+            <div class="form-group">
+                <label>Nome do Cliente</label>
+                <input type="text" name="nome" placeholder="Digite o nome" required>
+            </div>
+
+            <div class="form-group">
+                <label>CNPJ</label>
+                <input type="text" name="cnpj" placeholder="Opcional">
+            </div>
+
+            <div class="form-group">
+                <label>Endereço</label>
+                <input type="text" name="endereco" placeholder="Rua, número, cidade...">
+            </div>
+
+            <div class="form-group full">
+                <button type="submit" class="btn-primary">Cadastrar Cliente</button>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- ==================== FILTRO DE BUSCA ==================== -->
+    <div class="card">
+        <h2>🔍 Buscar Cliente</h2>
+        <div class="form-group">
+            <input type="text" id="filtro" placeholder="Digite nome, CNPJ ou endereço...">
+        </div>
+    </div>
+
+    <!-- ==================== TABELA DE CLIENTES ==================== -->
+    <div class="card">
+        <h2>📋 Clientes Cadastrados</h2>
+
+        <!-- WRAPPER RESPONSIVO -->
+        <div class="table-responsive">
+            <table id="tabela-clientes" class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>CNPJ</th>
+                        <th>Endereço</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for c in clientes %}
+                    <tr>
+                        <td>{{ c.id }}</td>
+                        <td>{{ c.nome }}</td>
+                        <td>{{ c.cnpj }}</td>
+                        <td>{{ c.endereco }}</td>
+                        <td>
+                            <a href="{{ url_for('editar_cliente', id=c.id) }}" class="btn-action edit">✏ Editar</a>
+
+                            <a href="{{ url_for('excluir_cliente', id=c.id) }}" class="btn-action delete"
+                                onclick="return confirm('Tem certeza que deseja excluir?')">🗑 Excluir</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

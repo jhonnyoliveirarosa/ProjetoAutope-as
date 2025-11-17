@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% set css = 'forms.css' %}
+{% block title %}Pedidos entre Filiais{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>🚚 Pedidos entre Filiais</h1>
+  <p class="muted">Gerencie o envio e recebimento de pedidos entre filiais</p>
+</section>
+
+<div class="grid-container">
+  <div class="card">
+    <h2>📝 Novo Pedido</h2>
+    <form method="POST" class="form-grid">
+      <div class="form-group">
+        <label>Filial de Origem</label>
+        <input type="text" name="origem" required>
+      </div>
+      <div class="form-group">
+        <label>Filial de Destino</label>
+        <input type="text" name="destino" required>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">💾 Criar Pedido</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>📋 Pedidos Registrados</h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Origem</th>
+          <th>Destino</th>
+          <th>Data</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in pedidos %}
+        <tr>
+          <td>{{ p.id }}</td>
+          <td>{{ p.origem }}</td>
+          <td>{{ p.destino }}</td>
+          <td>{{ p.data.strftime('%d/%m/%Y %H:%M') }}</td>
+          <td>{{ p.status }}</td>
+          <td>
+            {% if p.status != 'Recebido' %}
+            <a href="{{ url_for('itens_pedido', pedido_id=p.id) }}" class="btn-action edit">📦 Itens</a>
+            <a href="{{ url_for('receber_pedido', id=p.id) }}" class="btn-action receber">✅ Receber</a>
+            {% else %}
+            ✔️ Recebido
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

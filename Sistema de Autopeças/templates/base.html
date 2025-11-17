@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ title or "Sistema Autopeças" }}</title>
+
+  <!-- CSS base global (layout principal, sidebar, footer, etc.) -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+  <!-- CSS específico da página -->
+  {% if css %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/' ~ css) }}" />
+  {% endif %}
+
+  <!-- Bibliotecas -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+</head>
+
+<body>
+  <div class="app">
+    <!-- === SIDEBAR === -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">AP</div>
+        <div class="title">Autopeças</div>
+      </div>
+
+      <nav class="nav">
+        <a href="{{ url_for('dashboard') }}" class="{% if request.endpoint == 'dashboard' %}active{% endif %}">
+          <div class="icon">📊</div>
+          <div class="label">Dashboard</div>
+        </a>
+        <a href="{{ url_for('produtos') }}">
+          <div class="icon">📦</div>
+          <div class="label">Produtos</div>
+        </a>
+        <a href="{{ url_for('notas') }}">
+          <div class="icon">🧾</div>
+          <div class="label">Notas</div>
+        </a>
+        <a href="{{ url_for('estoque') }}">
+          <div class="icon">📈</div>
+          <div class="label">Estoque</div>
+        </a>
+        <a href="{{ url_for('movimentacoes') }}">
+          <div class="icon">🔄</div>
+          <div class="label">Movimentações</div>
+        </a>
+        <a href="{{ url_for('pedidos') }}">
+          <div class="icon">🛒</div>
+          <div class="label">Pedidos</div>
+        </a>
+        <a href="{{ url_for('vendas') }}">
+          <div class="icon">💰</div>
+          <div class="label">Vendas</div>
+        </a>
+        <a href="{{ url_for('clientes') }}">
+          <div class="icon">👥</div>
+          <div class="label">Cliente</div>
+        </a>
+        <a href="{{ url_for('logout') }}" class="logout-btn">
+          <div class="icon">🚪</div>
+          <div class="label">Sair</div>
+        </a>
+
+      </nav>
+
+      <div class="spacer"></div>
+      <div class="small-muted">Admin · v1.0</div>
+    </aside>
+
+    <!-- === CONTEÚDO PRINCIPAL === -->
+    <main class="main-content">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
+  <!-- Rodapé global -->
+  <footer>
+    Desenvolvido por <span>Autopeças System</span> · {{ current_year or 2025 }}
+  </footer>
+
+  {% if script %}
+  <script src="{{ url_for('static', filename='js/' ~ script) }}"></script>
+  {% endif %}
+</body>
+
+</html>

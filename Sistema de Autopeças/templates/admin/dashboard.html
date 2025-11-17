@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% set css = 'dashboard.css' %}
+{% set script = 'dashboard.js' %}
+
+{% block content %}
+
+<header class="page-header">
+  <h1>📊 Painel de Controle</h1>
+  <div class="small-muted">Resumo Mensal</div>
+</header>
+
+<!-- FILTROS -->
+<form method="get" action="{{ url_for('dashboard') }}" class="filters">
+  <label>Mês
+    <select id="mes" name="mes">
+      {% for m in range(1, 13) %}
+      <option value="{{ m }}" {% if m==mes_atual %}selected{% endif %}>{{ "%02d"|format(m) }}</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label>Ano
+    <select id="ano" name="ano">
+      {% for a in anos_disponiveis %}
+      <option value="{{ a }}" {% if a==ano_atual %}selected{% endif %}>{{ a }}</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <button type="submit" class="primary">Aplicar</button>
+</form>
+
+<!-- CARDS -->
+<section class="cards">
+  <div class="card">
+    <div class="label">💰 Vendas do Mês</div>
+    <div class="value">R$ {{ "%.2f"|format(vendas_mes or 0) }}</div>
+  </div>
+  <div class="card">
+    <div class="label">⬆️ Entradas</div>
+    <div class="value">{{ entradas_mes or 0 }}</div>
+  </div>
+  <div class="card">
+    <div class="label">⬇️ Saídas</div>
+    <div class="value">{{ saidas_mes or 0 }}</div>
+  </div>
+  <div class="card">
+    <div class="label">⚠️ Produtos Críticos</div>
+    <div class="value">{{ produtos_criticos|length }}</div>
+  </div>
+  <div class="card">
+    <div class="label">📦 Valor em Estoque</div>
+    <div class="value">R$ {{ "%.2f"|format(valor_estoque or 0) }}</div>
+  </div>
+</section>
+
+<!-- PRODUTOS CRÍTICOS -->
+{% if produtos_criticos %}
+<section class="critical-section">
+  <h3>⚠️ Produtos com Estoque Baixo</h3>
+  <table class="critical-table">
+    <thead>
+      <tr>
+        <th>Descrição</th>
+        <th>Estoque Atual</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for produto in produtos_criticos %}
+      <tr>
+        <td>{{ produto.descricao }}</td>
+        <td style="color: #f87171; font-weight: bold;">{{ produto.estoque_atual }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endif %}
+
+<!-- GRÁFICOS -->
+<section class="charts">
+  <div class="chart-box">
+    <h3>📈 Movimentações Diárias</h3>
+    <canvas id="graficoMovimentacoes"></canvas>
+  </div>
+  <div class="chart-box">
+    <h3>🥧 Entradas x Saídas</h3>
+    <canvas id="graficoPizza"></canvas>
+  </div>
+</section>
+
+<script>
+  const dias = {{ dias | tojson }};
+  const entradas_por_dia = {{ entradas_por_dia | tojson }};
+  const saidas_por_dia = {{ saidas_por_dia | tojson }};
+  const totalEntradas = {{ entradas_total | default (0) }};
+  const totalSaidas = {{ saidas_total | default (0) }};
+</script>
+{% endblock %}

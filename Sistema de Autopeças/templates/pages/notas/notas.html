@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% set css = 'forms.css' %}
+{% block title %}Notas Fiscais{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>🧾 Notas Fiscais</h1>
+  <p class="muted">Gerencie o cadastro e os itens das notas fiscais</p>
+</section>
+
+<div class="grid-container">
+  <!-- ==== FORMULÁRIO DE CADASTRO ==== -->
+  <div class="card">
+    <h2>📋 Cadastrar Nota</h2>
+    <form method="POST" class="form-grid">
+      <div class="form-group">
+        <label for="numero">Número da Nota</label>
+        <input type="text" id="numero" name="numero" required>
+      </div>
+
+      <div class="form-group">
+        <label for="fornecedor">Fornecedor</label>
+        <input type="text" id="fornecedor" name="fornecedor" required>
+      </div>
+
+      <div class="form-group">
+        <label for="data">Data</label>
+        <input type="date" id="data" name="data" required>
+      </div>
+
+      <div class="form-group">
+        <label for="valor_total">Valor Total</label>
+        <input type="number" id="valor_total" name="valor_total" step="0.01" required>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">💾 Salvar Nota</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ==== TABELA DE NOTAS CADASTRADAS ==== -->
+  <div class="card">
+    <h2>📦 Notas Cadastradas</h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Número</th>
+          <th>Fornecedor</th>
+          <th>Data</th>
+          <th>Valor Total</th>
+          <th>Chave de Acesso</th>
+          <th style="width:150px;">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for n in notas %}
+        <tr>
+          <td>{{ n.id }}</td>
+          <td>{{ n.numero }}</td>
+          <td>{{ n.fornecedor }}</td>
+          <td>{{ n.data.strftime('%d/%m/%Y') }}</td>
+          <td>R$ {{ "%.2f"|format(n.valor_total) }}</td>
+          <td>{{ n.chave_acesso }}</td>
+          <td>
+            <a href="{{ url_for('editar_nota', id=n.id) }}" class="btn-action edit">✏️ Editar</a>
+            <a href="{{ url_for('excluir_nota', id=n.id) }}" class="btn-action delete"
+              onclick="return confirm('Deseja excluir esta nota?')">🗑️ Excluir</a>
+            <a href="{{ url_for('itens_nota', nota_id=n.id) }}" class="btn-action itens">📦 Itens</a>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="7" style="text-align:center;color:#94a3b8;">Nenhuma nota cadastrada.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
